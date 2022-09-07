@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<h2 th:align="center">Фильтрация</h2>
+
+<div class="container">
+    <div class="row mx-5">
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/blog/filter/result'}">
+                <input type="text" name="title">
+                <input type="submit" class=" btn btn-warning" value="Найти"/>
+                <div class="b-example-divider"></div>
+            </form>
+        </div>
+
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/blog/filter/allResult'}">
+                <input type="text" name="title">
+                <input type="submit" class=" btn btn-warning" value="Найти по точному совпадению"/>
+                <div class="b-example-divider"></div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div th:if="${result != null}" th:align="center">
+
+    <div th:if="${result.isEmpty()}">
+        <div class="mt-4 col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Ничего не найдено...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="post : ${result}">
+        <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${post.getTitle()}"></h3>
+                    <p class="card-text" th:text="${post.getFull_text()}"></p>
+                    <p class="card-text"><small class="text-muted"
+                                                th:text="${post.getViews()} + ' просмотров'"></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--<footer th:insert="blocks/footer"></footer>-->
+</html>

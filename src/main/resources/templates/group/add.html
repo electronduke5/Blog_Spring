@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+</head>
+<style>
+    .center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body class="text-center ">
+<header th:insert="blocks/header"></header>
+
+<div class="row justify-content-md-center align-items-center center">
+    <form method="post" th:action="${'/groups/add'}" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
+        <div class="row g-3 ">
+            <h1 class="h3 mb-3 fw-normal">Пора создавать группу, дружище</h1>
+
+            <div class="col-md-12">
+                <input type=text class="form-control" name="name" id="name" placeholder="Название">
+            </div>
+
+            <div class="col-md-12">
+                <input type=text class="form-control" name="description" id="description" placeholder="Описание">
+            </div>
+            <div class="col-md-12">
+                <input type=checkbox name="isPrivate" id="isPrivate">
+                <label for="isPrivate">Приватная группа</label>
+            </div>
+
+            <input class="w-100 btn btn-lg btn-warning" type="submit" value="Добавить"/>
+        </div>
+    </form>
+</div>
+
+<!--<footer th:insert="blocks/footer"></footer>-->
+</body>
+</html>

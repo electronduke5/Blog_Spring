@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body class="">
+<header th:insert="blocks/header"></header>
+
+<h1 th:align="center" class="mt-2">Все профили</h1>
+
+<a href="/profile/filter" class="btn btn-warning mb-3 mx-4">Поиск профиля</a>
+<a href="/profile/add" class="btn btn-success mb-3 mx-4">Поиск профиля</a>
+
+<div class="b-example-divider"></div>
+<div th:each="profile : ${profiles}" class="mx-4">
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title"
+                    th:text="${profile.getSurname() + ' ' + profile.getName() + ' ' + profile.getPatronymic()}"></h3>
+                <p class="card-text" th:text="'Дата рождения: ' + ${profile.getDateOfBirth()}"></p>
+                <p class="card-text"><small class="text-muted"
+                                            th:text="${profile.getFollower()} + ' подписчиков'"></small></p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

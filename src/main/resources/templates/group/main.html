@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body class="">
+<header th:insert="blocks/header"></header>
+
+<h1 th:align="center" class="mt-2">Все группы</h1>
+
+<a href="/groups/filter" class="btn btn-warning mb-3 mx-4">Поиск группы</a>
+<a href="/groups/add" class="btn btn-success mb-3 mx-4">Поиск группу</a>
+
+<div class="b-example-divider"></div>
+<div th:each="group : ${groups}" class="mx-4">
+    <div class="col-sm-6 col-lg-4 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title" th:text="${group.getName()}"></h3>
+                <p class="card-text" th:text="${group.getDescription()}"></p>
+                <p class="card-text" th:text="${group.getDateFoundation()}"></p>
+                <p class="card-text" th:text="${group.getPrivate()}"/>
+                <p class="card-text"><small class="text-muted"
+                                            th:text="${group.getSubscribers()} + ' подписчиков'"></small></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<footer th:insert="blocks/footer"></footer>-->
+</body>
+</html>

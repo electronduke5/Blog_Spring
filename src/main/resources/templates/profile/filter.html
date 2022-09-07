@@ -1,0 +1,62 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+
+<h2 th:align="center">Поиск пользвателей по фамилии</h2>
+
+<div class="container">
+    <div class="row mx-5">
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/profile/filter/result'}">
+                <input type="text" name="surname">
+                <input type="submit" class="btn btn-warning" value="Найти"/>
+                <div class="b-example-divider"></div>
+            </form>
+        </div>
+
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/profile/filter/allResult'}">
+                <input type="text" name="surname">
+                <input type="submit" class="btn btn-warning" value="Найти точное совпадение"/>
+                <div class="b-example-divider"></div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div th:if="${result != null}" th:align="center">
+
+    <div th:if="${result.isEmpty()}">
+        <div class="mt-4 col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Ничего не найдено...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="profile : ${result}">
+        <div class="mt-4 col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title"
+                        th:text="${profile.getSurname() + ' ' + profile.getName() + ' ' + profile.getPatronymic()}"></h3>
+                    <p class="card-text" th:text="${profile.getDateOfBirth()}"></p>
+                    <p class="card-text"><small class="text-muted"
+                                                th:text="${profile.getFollower()} + ' подписчиков'"></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<!--<footer th:insert="blocks/footer"></footer>-->
+</html>

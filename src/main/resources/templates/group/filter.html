@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Getting Started: Serving Web Content</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<header th:insert="blocks/header"></header>
+<h2 th:align="center">Поиск групп по названию</h2>
+
+<div class="container">
+    <div class="row mx-5">
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/groups/filter/result'}">
+                <input type="text" name="name">
+                <input type="submit" class=" btn btn-warning" value="Найти"/>
+                <div class="b-example-divider"></div>
+            </form>
+        </div>
+        <div class="col my-3">
+            <form th:align="center" method="post" th:action="${'/groups/filter/allResult'}">
+                <input type="text" name="name">
+                <input type="submit" class=" btn btn-warning" value="Найти по точному совпадению"/>
+                <div class="b-example-divider"></div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div th:if="${result != null}" th:align="center">
+
+    <div th:if="${result.isEmpty()}">
+        <div class="mt-4 col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Ничего не найдено...</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:each="group : ${result}">
+        <div class="mt-4 col-sm-6 col-lg-4">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title" th:text="${group.getName()}"></h3>
+                    <p class="card-text" th:text="${group.getDescription()}"></p>
+                    <p class="card-text" th:text="${group.getPrivate()}"/>
+                    <p class="card-text" th:align="left"
+                       th:text="'Дата основания: ' + ${group.getDateFoundation()}"></p>
+                    <p class="card-text" th:align="left"><small class="text-muted"
+                                                                th:text="${group.getSubscribers()} + ' подписчиков'"></small>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--<footer th:insert="blocks/footer"></footer>-->
+</html>
+</body>
+</html>
