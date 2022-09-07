@@ -1,14 +1,16 @@
 package com.example.SecondProject.models;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.thymeleaf.util.DateUtils;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 public class Profile {
@@ -66,6 +68,13 @@ public class Profile {
     public String getDateOfBirth() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
         return sdfDate.format(dateOfBirth);
+    }
+
+    public String getDateOfBirthDate() throws ParseException {
+        SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy-MM-dd");
+        String date = DateUtils.format(dateOfBirth, "yyyy-MM-dd", Locale.ROOT);
+        System.out.println("DATE: " + date);
+        return date;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {

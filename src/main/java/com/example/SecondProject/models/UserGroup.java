@@ -16,7 +16,7 @@ public class UserGroup {
     private Date dateFoundation;
     private Boolean isPrivate;
 
-    public UserGroup(){
+    public UserGroup() {
 
     }
 
@@ -26,6 +26,10 @@ public class UserGroup {
         this.subscribers = subscribers;
         this.dateFoundation = dateFoundation;
         this.isPrivate = isPrivate;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
@@ -62,7 +66,11 @@ public class UserGroup {
     }
 
     public String getPrivate() {
-        return isPrivate? "Приватная группа" : "Публичная группа";
+        return isPrivate ? "Приватная группа" : "Публичная группа";
+    }
+
+    public Boolean getPrivateBoolean() {
+        return isPrivate;
     }
 
     public void setPrivate(Boolean aPrivate) {
