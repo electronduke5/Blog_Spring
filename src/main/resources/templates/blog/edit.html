@@ -7,25 +7,29 @@
 
 <body>
 <header th:insert="blocks/header"></header>
-<div class="row justify-content-md-center align-items-center center" th:each="el : ${post}">
-    <form method="post" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
+<div class="row justify-content-md-center align-items-center center" >
+    <form th:object="${post}" method="post" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
         <div class="row g-3 ">
             <h1 class="h3 mb-3 fw-normal">Пора обновить новость...</h1>
 
             <div class="col-md-12">
-                <input type=text class="form-control" name="title" id="title" placeholder="Введите название статьи"
-                       th:value="${el.getTitle()}">
+                <input th:field="*{title}" type=text class="form-control" name="title" id="title" placeholder="Введите название статьи"
+                       th:value="*{title}">
+                <div style="color: red" th:if="${#fields.hasErrors('title')}" th:errors="*{title}"></div>
             </div>
             <div class="col-md-12">
-                <input type="text" class="form-control" id="full_text" name="full_text" th:value="${el.getFull_text()}">
+                <input type="text" class="form-control" id="full_text" name="full_text" th:value="*{full_text}" placeholder="Новость">
+                <div style="color: red" th:if="${#fields.hasErrors('full_text')}" th:errors="*{full_text}"></div>
             </div>
             <div class="col-md-12">
-                <input type="text" class="form-control" id="anons" name="anons" th:value="${el.getAnons()}">
+                <input type="text" class="form-control" id="anons" name="anons" placeholder="Анонс" th:value="*{anons}">
+                <div style="color: red" th:if="${#fields.hasErrors('anons')}" th:errors="*{anons}"></div>
             </div>
             <input class="w-100 btn btn-lg btn-warning" type="submit" value="Обновить"/>
         </div>
     </form>
 </div>
+
 </body>
 </html>
 

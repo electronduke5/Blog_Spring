@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,7 +21,11 @@ public class Profile {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotEmpty(message = "Поле не может быть пустым")
+    @Size(min = 2, max = 50, message = "Размер данного поля должен быть в диапазоне от 2 до 50!")
     private String surname, name, patronymic;
+    @NotNull(message = "Поле не может быть пустым")
+    @Past(message = "Дата рождения не может быть в будущем")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateOfBirth;
     private Integer follower;
@@ -65,9 +73,18 @@ public class Profile {
         this.patronymic = patronymic;
     }
 
-    public String getDateOfBirth() {
-        SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
-        return sdfDate.format(dateOfBirth);
+    public String getDateOfBirthString() {
+        try {
+            SimpleDateFormat sdfDate = new SimpleDateFormat("dd.MM.yyyy");
+            return sdfDate.format(dateOfBirth);
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
+    }
+
+    public Date getDateOfBirth() {
+        return dateOfBirth;
     }
 
     public String getDateOfBirthDate() throws ParseException {

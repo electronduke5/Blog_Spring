@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Getting Started: Serving Web Content</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -21,19 +21,23 @@
 <header th:insert="blocks/header"></header>
 
 <div class="row justify-content-md-center align-items-center center">
-    <form method="post" th:action="${'/groups/add'}" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
+    <form th:object="${group}" method="post" th:action="${'/groups/add'}"
+          class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
         <div class="row g-3 ">
             <h1 class="h3 mb-3 fw-normal">Пора создавать группу, дружище</h1>
 
             <div class="col-md-12">
-                <input type=text class="form-control" name="name" id="name" placeholder="Название">
+                <input th:field="*{name}" type=text class="form-control" name="name" id="name" placeholder="Название">
+                <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
 
             <div class="col-md-12">
-                <input type=text class="form-control" name="description" id="description" placeholder="Описание">
+                <input th:field="*{description}" type=text class="form-control" name="description" id="description"
+                       placeholder="Описание">
+                <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
             </div>
             <div class="col-md-12">
-                <input type=checkbox name="isPrivate" id="isPrivate">
+                <input th:field="*{private}" type=checkbox name="isPrivate" id="isPrivate">
                 <label for="isPrivate">Приватная группа</label>
             </div>
 

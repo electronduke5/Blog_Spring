@@ -1,16 +1,16 @@
 package com.example.SecondProject.controllers;
 
+import com.example.SecondProject.models.Post;
 import com.example.SecondProject.models.Profile;
 import com.example.SecondProject.repo.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,21 +29,20 @@ public class ProfileController {
     }
 
     @GetMapping("/profiles/add")
-    public String profileAdd(Model model) {
+    public String profileAdd(Profile profile, Model model) {
         return "profile/add";
     }
 
     @PostMapping("/profiles/add")
     public String profilePostAdd(
-            @RequestParam String surname,
-            @RequestParam String name,
-            @RequestParam String patronymic,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirth,
-            Model model
+            @ModelAttribute("profile") @Valid Profile profile,
+            BindingResult bindingResult
     ) {
-        Profile profile = new Profile(surname, name, patronymic, dateOfBirth, 0);
+        if (bindingResult.hasErrors()) {
+            return "profile/add";
+        }
+        profile.setFollower(0);
         profileRepository.save(profile);
-
         return "redirect:/profiles";
     }
 
@@ -93,17 +92,12 @@ public class ProfileController {
     }
 
     @PostMapping("/profile/{id}/edit")
-    public String profilePostEdit(@PathVariable("id") Long id,
-                                  @RequestParam String surname,
-                                  @RequestParam String name,
-                                  @RequestParam String patronymic,
-                                  @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date dateOfBirth,
-                                  Model model) {
-        Profile profile = profileRepository.findById(id).orElseThrow();
-        profile.setSurname(surname);
-        profile.setName(name);
-        profile.setPatronymic(patronymic);
-        profile.setDateOfBirth(dateOfBirth);
+    public String profilePostEdit(@ModelAttribute("profile") @Valid Profile profile,
+                                  BindingResult bindingResult) {
+
+        if (bindingResult.hasErrors()) {
+            return "profile/edit";
+        }
         profileRepository.save(profile);
         return "redirect:/profiles";
     }

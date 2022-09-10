@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <title>Getting Started: Serving Web Content</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
@@ -21,22 +21,30 @@
 <header th:insert="blocks/header"></header>
 
 <div class="row justify-content-md-center align-items-center center">
-  <form method="post" th:action="${'/profiles/add'}" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
+  <form th:object="${profile}" method="post" th:action="${'/profiles/add'}" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
     <div class="row g-3 ">
       <h1 class="h3 mb-3 fw-normal">Добавь юзера пж....</h1>
 
       <div class="col-md-12">
-        <input type=text class="form-control" name="surname" id="surname" placeholder="Фамилия">
+        <input th:field="*{surname}" type=text class="form-control" name="surname" id="surname" placeholder="Фамилия">
+        <div style="color: red" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"></div>
       </div>
+
       <div class="col-md-12">
-        <input type=text class="form-control" name="name" id="name" placeholder="Имя">
+        <input th:field="*{name}" type=text class="form-control" name="name" id="name" placeholder="Имя">
+        <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
       </div>
+
       <div class="col-md-12">
-        <input type=text class="form-control" name="patronymic" id="patronymic" placeholder="Отчество">
+        <input th:field="*{patronymic}" type=text class="form-control" name="patronymic" id="patronymic" placeholder="Отчество">
+        <div style="color: red" th:if="${#fields.hasErrors('patronymic')}" th:errors="*{patronymic}"></div>
       </div>
+
       <div class="col-md-12">
-        <input type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" maxlength="8" placeholder="Дата рождения">
+        <input th:field="${profile.dateOfBirth}" type="date" class="form-control" id="dateOfBirth" name="dateOfBirth" maxlength="8" placeholder="Дата рождения">
+        <div style="color: red" th:if="${#fields.hasErrors('dateOfBirth')}" th:errors="*{dateOfBirth}"></div>
       </div>
+
       <input class="w-100 btn btn-lg btn-warning" type="submit" value="Добавить"/>
     </div>
   </form>

@@ -11,13 +11,15 @@
 <header th:insert="blocks/header"></header>
 <div class="row justify-content-md-center align-items-center center">
 
-    <form method="post" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm">
+    <form th:object="${group}" method="post" class="col-sm-6 col-lg-4 mb-4 my-3 p-3 bg-body rounded shadow-sm"
+          th:action="'/group/' + ${group.id} + '/edit'">
         <div class="row g-3 ">
             <h1 class="h3 mb-3 fw-normal">Пора обновить группу...</h1>
 
             <div class="col-md-12">
-                <input type=text class="form-control" name="name" id="name" placeholder="Название группы"
-                       th:value="${group.getName()}">
+                <input th:field="*{name}" type=text class="form-control" name="name" id="name"
+                       placeholder="Название группы">
+                <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
             </div>
             <div class="col-md-12">
 
@@ -26,17 +28,23 @@
                        name="description"
                        id="description"
                        placeholder="Описание группы"
-                       th:value="${group.getDescription()}">
+                       th:field="*{description}">
+                <div style="color: red" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
             </div>
 
             <div class="col-md-12">
                 <input type=checkbox
                        name="isPrivate"
-                       th:checked="${group.getPrivateBoolean()}"
+                       th:field="*{private}"
                        id="isPrivate">
 
                 <label for="isPrivate">Приватная группа</label>
             </div>
+
+            <input type="hidden" th:field="*{subscribers}" th:value="*{subscribers}"/>
+
+            <input type="hidden" th:field="*{dateFoundation}" th:value="*{dateFoundation}"/>
+
             <input class="w-100 btn btn-lg btn-warning" type="submit" value="Обновить"/>
         </div>
     </form>

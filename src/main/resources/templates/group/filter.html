@@ -56,7 +56,7 @@
                     <p class="card-text" th:text="${group.getDescription()}"></p>
                     <p class="card-text" th:text="${group.getPrivate()}"/>
                     <p class="card-text" th:align="left"
-                       th:text="'Дата основания: ' + ${group.getDateFoundation()}"></p>
+                       th:text="'Дата основания: ' + ${group.getDateFoundationString()}"></p>
                     <p class="card-text" th:align="left"><small class="text-muted"
                                                                 th:text="${group.getSubscribers()} + ' подписчиков'"></small>
                     </p>
