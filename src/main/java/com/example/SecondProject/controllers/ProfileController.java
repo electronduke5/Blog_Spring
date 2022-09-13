@@ -104,8 +104,7 @@ public class ProfileController {
 
     @PostMapping("/profile/{id}/remove")
     public String profileRemove(@PathVariable("id") Long id, Model model) {
-        Profile profile = profileRepository.findById(id).orElseThrow();
-        profileRepository.delete(profile);
+        profileRepository.deleteById(id);
         return "redirect:/profiles";
     }
 

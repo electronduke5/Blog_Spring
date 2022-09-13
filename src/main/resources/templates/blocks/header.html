@@ -30,8 +30,14 @@
             </form>
 
             <div class="text-end">
-                <button type="button" class="btn btn-outline-light me-2">Вход</button>
-                <button type="button" class="btn btn-warning">Регистрация</button>
+                <a href="/login" class="btn btn-outline-light me-2" >Вход</a>
+                <a href="/registration" class="btn btn-warning">Регистрация</a>
+                <div class="col-md-3 text-end">
+                    <form th:action="@{/logout}" method="post">
+                        <!--            <button type="button" class="btn btn-outline-primary me-2">Login</button>-->
+                        <input type="submit" value="Выйти" class="btn btn-primary">
+                    </form>
+                </div>
             </div>
         </div>
     </div>

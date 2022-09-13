@@ -104,8 +104,7 @@ public class GroupController {
 
     @PostMapping("/group/{id}/remove")
     public String groupRemove(@PathVariable("id") Long id, Model model) {
-        UserGroup group = userGroupRepository.findById(id).orElseThrow();
-        userGroupRepository.delete(group);
+        userGroupRepository.deleteById(id);
         return "redirect:/groups";
     }
 
