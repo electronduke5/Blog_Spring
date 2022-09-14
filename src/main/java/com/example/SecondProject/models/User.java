@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -21,6 +22,43 @@ public class User implements UserDetails {
     @CollectionTable(name = "user_role",joinColumns = @JoinColumn(name="user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
+
+    @ManyToMany
+    @JoinTable (name="user_university",
+            joinColumns=@JoinColumn (name="user_id"),
+            inverseJoinColumns=@JoinColumn(name="university_id"))
+    private List<University> universities;
+
+    @ManyToOne(optional = true, cascade = CascadeType.ALL)
+    private Address address;
+
+    @OneToOne(optional = true, cascade = CascadeType.ALL)
+    @JoinColumn(name="passport_id")
+    private Passport passport;
+
+    public Passport getPassport() {
+        return passport;
+    }
+
+    public void setPasport(Passport passport) {
+        this.passport = passport;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public List<University> getUniversities() {
+        return universities;
+    }
+
+    public void setUniversities(List<University> universities) {
+        this.universities = universities;
+    }
 
     public Long getId() {
         return id;
